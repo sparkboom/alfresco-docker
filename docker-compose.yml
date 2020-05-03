@@ -1,0 +1,22 @@
+version: "3"
+services:
+  postgres-alf:
+    container_name: "postgres-alf"
+    image: postgres-alfresco:1
+    build:
+      context: ./images/postgres-alfresco
+    ports:
+      - "54320:5432"
+    env_file:
+      - ./containers/postgres-alf/postgres.env
+  alfresco:
+    # default username & password is admin / admin
+    image: "gui81/alfresco:latest"
+    container_name: "alfresco"
+    ports:
+      - "8080:8080"
+    env_file:
+      - ./containers/alfresco/alfresco.env
+    volumes:
+     - ./containers/alfresco/alfresco_content:/content
+     - ./containers/alfresco/alfresco_data:/alfresco/alf_data
